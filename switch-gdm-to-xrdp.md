@@ -1,7 +1,8 @@
 # 1) 安装 xrdp 及其 Xorg 后端
+  ```
   sudo apt update
   sudo apt install -y xrdp xorgxrdp
-
+  ```
   # 2) 允许 xrdp 读取 TLS 私钥
   sudo usermod -aG ssl-cert xrdp
 
