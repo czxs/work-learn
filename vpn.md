@@ -3,6 +3,43 @@
 ```
 vpn
 fortigate ------> strongwan --------> freeradius --------> entra id
+
+                         Internet
+                            │
+                            │ IKEv2 / UDP 500,4500
+                            ▼
+                    ┌─────────────────┐
+                    │   FortiClient   │
+                    │  EAP-TTLS/PAP   │
+                    └────────┬────────┘
+                             │
+                             │ IKEv2 / EAP
+                             ▼
+                    ┌─────────────────┐
+                    │    strongSwan   │
+                    │    6.1.0        │
+                    │  eap-radius     │
+                    └────────┬────────┘
+                             │
+                             │ RADIUS / EAP
+                             │ UDP 1812
+                             ▼
+                    ┌─────────────────┐
+                    │   FreeRADIUS    │
+                    │    3.2.11      │
+                    │                 │
+                    │ EAP-TTLS        │
+                    │ inner-tunnel    │
+                    │ PAP             │
+                    │ REST            │
+                    └────────┬────────┘
+                             │
+                             │ HTTPS POST
+                             ▼
+                    ┌─────────────────┐
+                    │ Microsoft Entra │
+                    │ OAuth2 ROPC     │
+                    └─────────────────┘
 ```
 
 ## fortigate request and configuration 
