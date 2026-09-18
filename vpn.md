@@ -135,8 +135,8 @@ fortigate ------> strongwan --------> freeradius --------> entra id
 
      ```
 ## freeradius request and configuration 
-见链接
-###
+
+### 
 1. version FreeRADIUS Version 3.2.11 (above)
 2. client.conf
    ```
@@ -152,7 +152,7 @@ fortigate ------> strongwan --------> freeradius --------> entra id
       certificate_file = /etc/letsencrypt/live/vgate.app.ayshei.com/fullchain.pem
       ca_file = /etc/letsencrypt/live/vgate.app.ayshei.com/chain.pem
    ```
-#### for the certification we need to sign 
+
 4. /usr/local/radius/etc/raddb/mods-config/files/authorize
    ``` just for test local user ,add these under the file 
     
