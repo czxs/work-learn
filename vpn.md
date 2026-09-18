@@ -209,20 +209,28 @@ fortigate ------> strongwan --------> freeradius --------> entra id
     }
    ```
 3. /usr/local/radius/etc/raddb/mods-enabled/eap
-   ``` add or update ---new 
-   tls-config tls-common {
+   ```
+   # add or update ---new
+   eap {
+    default_eap_type = ttls
+    tls-config tls-common {
       private_key_file = /etc/letsencrypt/live/vgate.app.ayshei.com/privkey.pem
       certificate_file = /etc/letsencrypt/live/vgate.app.ayshei.com/fullchain.pem
       ca_file = /etc/letsencrypt/live/vgate.app.ayshei.com/chain.pem
+    ...
+  }
+
+
    ```
 
-4. /usr/local/radius/etc/raddb/mods-config/files/authorize
-   ``` just for test local user ,add these under the file 
+4. /usr/local/radius/etc/raddb/mods-config/files/authorize （not necessary）
+   ```
+   just for test local user ,add these under the file 
     
     testuser    Cleartext-Password := "TestPassword123"
     Nithins-MacBook-Pro.local    Cleartext-Password := "TestPassword1231234"
     ```
-5. /usr/local/radius/etc/raddb/sites-enabled/default
+5. /usr/local/radius/etc/raddb/sites-enabled/default（not necessary）
    ```
    for add into  authorize section
       if (&MS-CHAP-User-Name) {
@@ -232,18 +240,21 @@ fortigate ------> strongwan --------> freeradius --------> entra id
             linelog
         }
    ```
-   ``` add into anthenticate
 
-   ```
 6. /usr/local/radius/etc/raddb/mods-available/files
 7. /usr/local/radius/etc/raddb/sites-enabled/inner-tunnel
    ```
-   for add into authorize section
-        if (&User-Password) {
-        update control {
-            Auth-Type := PAP
-        }
-    }
+  authorize {
+      ...
+  
+      if (&User-Password) {
+          update control {
+              Auth-Type := PAP
+          }
+      }
+      rest 
+      ...
+  }
    
    ```
    ```
@@ -252,11 +263,14 @@ fortigate ------> strongwan --------> freeradius --------> entra id
    
    ```
    ```
-   for add into authenticate section
-
-       Auth-Type PAP {
+    authenticate {
+    
+        Auth-Type PAP {
             rest
         }
+    
+        ...
+    }
 
    ```
 8. /usr/local/radius/etc/raddb/mods-enabled/rest
