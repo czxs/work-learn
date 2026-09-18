@@ -191,8 +191,7 @@ fortigate ------> strongwan --------> freeradius --------> entra id
             rest
         }
   ```
-
-8. mods-enabled/rest
+8. /usr/local/radius/etc/raddb/mods-enabled/rest
   ```
       rest {
         connect {
