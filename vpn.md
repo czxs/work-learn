@@ -192,7 +192,7 @@ fortigate ------> strongwan --------> freeradius --------> entra id
         }
   ```
 
-8.  mods-enabled/rest
+8. mods-enabled/rest
   ```
       rest {
         connect {
