@@ -194,27 +194,27 @@ fortigate ------> strongwan --------> freeradius --------> entra id
 
 8.  mods-enabled/rest
   ```
-  rest {
-    connect {
-        uri = "https://login.microsoftonline.com"
-        tls {
-            # Standard web verification
-            require_cert = "allow"
+      rest {
+        connect {
+            uri = "https://login.microsoftonline.com"
+            tls {
+                # Standard web verification
+                require_cert = "allow"
+            }
         }
-    }
-    
-    authenticate {
-        # Construct the Microsoft OAuth2 password check request
-        uri = "${..connect.uri}/<tenant id>/oauth2/v2.0/token"
-        method = 'post'
-body = 'post'
-        data = 'grant_type=password&client_id=<application id>&client_secret=<secret>&scope=user.read&username=%{User-Name}&pass
-word=%{User-Password}'
         
-        # If Microsoft returns a 200 OK (token generated), the password is correct!
-        valid_codes = 200
-    }
-  }
+        authenticate {
+            # Construct the Microsoft OAuth2 password check request
+            uri = "${..connect.uri}/<tenant id>/oauth2/v2.0/token"
+            method = 'post'
+    body = 'post'
+            data = 'grant_type=password&client_id=<application id>&client_secret=<secret>&scope=user.read&username=%{User-Name}&pass
+    word=%{User-Password}'
+            
+            # If Microsoft returns a 200 OK (token generated), the password is correct!
+            valid_codes = 200
+        }
+      }
   ```
 
 ## server  request and configuration
