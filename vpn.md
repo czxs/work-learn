@@ -134,6 +134,32 @@ fortigate ------> strongwan --------> freeradius --------> entra id
       }
 
      ```
+## automatic sign certification
+1. install
+   ```
+   apt install certbot python3-certbot-dns-cloudflare
+   ```
+2. requestcertificate
+   ```
+    mkdir -p /root/.secrets/certbot
+    chmod 700 /root/.secrets/certbot
+    echo 'dns_cloudflare_api_token = xxxxxxxxxxxxxxxxx' > /root/.secrets/certbot/cloudflare.ini
+    certbot certonly \
+      --dns-cloudflare \
+      --dns-cloudflare-credentials /root/.secrets/certbot/cloudflare.ini \
+      -d vgate.app.ayshei.com
+   ```
+3. confirm the certificate
+   ```
+   certbot certificates
+   ```
+   right infomation:
+   
+    Certificate Name: vgate.app.ayshei.com
+    Domains: vgate.app.ayshei.com
+    Certificate Path: /etc/letsencrypt/live/vgate.app.ayshei.com/fullchain.pem
+    Private Key Path: /etc/letsencrypt/live/vgate.app.ayshei.com/privkey.pem
+   
 ## freeradius request and configuration 
 
 ### 
