@@ -231,22 +231,22 @@ fortigate ------> strongwan --------> freeradius --------> entra id
     Nithins-MacBook-Pro.local    Cleartext-Password := "TestPassword1231234"
     ```
 5. /usr/local/radius/etc/raddb/sites-enabled/default（not necessary）
-   ```
-   for add into  authorize section
+    ```
+    for add into  authorize section
       if (&MS-CHAP-User-Name) {
         update request {
             Tmp-String-0 := &MS-CHAP-User-Name
         }
             linelog
         }
-   ```
+    ```
 
 6. /usr/local/radius/etc/raddb/mods-available/files
 7. /usr/local/radius/etc/raddb/sites-enabled/inner-tunnel
-   ```
-  authorize {
+    ```
+    authorize {
       ...
-  
+    
       if (&User-Password) {
           update control {
               Auth-Type := PAP
@@ -254,15 +254,15 @@ fortigate ------> strongwan --------> freeradius --------> entra id
       }
       rest 
       ...
-  }
-   
-   ```
-   ```
-   for add into authorize section before pap 
+    }
+    
+    ```
+    ```
+    for add into authorize section before pap 
         rest 
-   
-   ```
-   ```
+    
+    ```
+    ```
     authenticate {
     
         Auth-Type PAP {
@@ -271,32 +271,32 @@ fortigate ------> strongwan --------> freeradius --------> entra id
     
         ...
     }
-
-   ```
-8. /usr/local/radius/etc/raddb/mods-enabled/rest
-```
-rest {
-  connect {
-      uri = "https://login.microsoftonline.com"
-      tls {
-          # Standard web verification
-          require_cert = "allow"
+    
+    ```
+8. /usr/local/radius/etc/raddb/mods-enabled/rest 
+    ```
+    rest {
+      connect {
+          uri = "https://login.microsoftonline.com"
+          tls {
+              # Standard web verification
+              require_cert = "allow"
+          }
       }
-  }
-  
-  authenticate {
-      # Construct the Microsoft OAuth2 password check request
-      uri = "${..connect.uri}/<tenant id>/oauth2/v2.0/token"
-      method = 'post'
-body = 'post'
-      data = 'grant_type=password&client_id=<application id>&client_secret=<secret>&scope=user.read&username=%{User-Name}&pass
-word=%{User-Password}'
       
-      # If Microsoft returns a 200 OK (token generated), the password is correct!
-      valid_codes = 200
-  }
-}
-```
+      authenticate {
+          # Construct the Microsoft OAuth2 password check request
+          uri = "${..connect.uri}/<tenant id>/oauth2/v2.0/token"
+          method = 'post'
+    body = 'post'
+          data = 'grant_type=password&client_id=<application id>&client_secret=<secret>&scope=user.read&username=%{User-Name}&pass
+    word=%{User-Password}'
+          
+          # If Microsoft returns a 200 OK (token generated), the password is correct!
+          valid_codes = 200
+      }
+    }
+    ```
 
 ## server  request and configuration
 1. kernel forward
