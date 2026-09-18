@@ -160,7 +160,8 @@ fortigate ------> strongwan --------> freeradius --------> entra id
     Nithins-MacBook-Pro.local    Cleartext-Password := "TestPassword1231234"
     ```
 5. /usr/local/radius/etc/raddb/sites-enabled/default
-   ``` add into  authorize section
+   ```
+   for add into  authorize section
       if (&MS-CHAP-User-Name) {
         update request {
             Tmp-String-0 := &MS-CHAP-User-Name
@@ -173,7 +174,8 @@ fortigate ------> strongwan --------> freeradius --------> entra id
    ```
 6. /usr/local/radius/etc/raddb/mods-available/files
 7. /usr/local/radius/etc/raddb/sites-enabled/inner-tunnel
-   ``` add into authorize
+   ```
+   for add into authorize section
         if (&User-Password) {
         update control {
             Auth-Type := PAP
@@ -181,16 +183,19 @@ fortigate ------> strongwan --------> freeradius --------> entra id
     }
    
    ```
-   ``` add into authorize before pap
+   ```
+   for add into authorize section before pap 
         rest 
    
    ```
-   ``` add into authenticate
+   ```
+   for add into authenticate section
 
        Auth-Type PAP {
             rest
         }
-  ```
+
+   ```
 8. /usr/local/radius/etc/raddb/mods-enabled/rest
   ```
       rest {
