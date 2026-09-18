@@ -300,24 +300,24 @@ fortigate ------> strongwan --------> freeradius --------> entra id
 
 ## server  request and configuration
 1. kernel forward
-  ```
-  sysctl -w net.ipv4.ip_forward=1
-  ```
+    ```
+    sysctl -w net.ipv4.ip_forward=1
+    ```
 2. iptables 转发网络
-  ```
-  iptables -t nat -A POSTROUTING \
-    -s 10.250.0.0/24 \
-    -d 192.168.100.0/24 \
-    -j MASQUERADE
-
-  iptables -A FORWARD \
-    -s 10.250.0.0/24 \
-    -d 192.168.100.0/24 \
-    -j ACCEPT
-
-  iptables -A FORWARD \
-      -s 192.168.100.0/24 \
-      -d 10.250.0.0/24 \
-      -m conntrack --ctstate ESTABLISHED,RELATED \
+    ```
+    iptables -t nat -A POSTROUTING \
+      -s 10.250.0.0/24 \
+      -d 192.168.100.0/24 \
+      -j MASQUERADE
+    
+    iptables -A FORWARD \
+      -s 10.250.0.0/24 \
+      -d 192.168.100.0/24 \
       -j ACCEPT
-  ```
+    
+    iptables -A FORWARD \
+        -s 192.168.100.0/24 \
+        -d 10.250.0.0/24 \
+        -m conntrack --ctstate ESTABLISHED,RELATED \
+        -j ACCEPT
+    ```
