@@ -274,7 +274,7 @@ fortigate ------> strongwan --------> freeradius --------> entra id
 
    ```
 8. /usr/local/radius/etc/raddb/mods-enabled/rest
-  ```
+   ```
       rest {
         connect {
             uri = "https://login.microsoftonline.com"
@@ -296,7 +296,7 @@ fortigate ------> strongwan --------> freeradius --------> entra id
             valid_codes = 200
         }
       }
-  ```
+   ```
 
 ## server  request and configuration
 1. kernel forward
