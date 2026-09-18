@@ -15,8 +15,8 @@ fortigate ------> strongwan --------> freeradius --------> entra id
 
 ###
 1. need version 6.0.1(above)
-2. configuration
-  a. strongwan.conf
+
+2. strongwan.conf
     ```
     # strongswan.conf - strongSwan configuration file
     #
@@ -37,7 +37,7 @@ fortigate ------> strongwan --------> freeradius --------> entra id
     
     include strongswan.d/*.conf
     ```
-  b. swanctl.conf
+3. swanctl.conf
      ```
        pools {
           vpn-pool {
@@ -93,7 +93,7 @@ fortigate ------> strongwan --------> freeradius --------> entra id
       }
       include conf.d/*.conf
      ```
-   c. charon-logging.conf 
+4. charon-logging.conf 
      ```
         filelog {
         strongswan {
@@ -115,7 +115,7 @@ fortigate ------> strongwan --------> freeradius --------> entra id
             append = yes
         }
      ```
-   d. strongswan.d/charon/eap-radius.conf 
+5. strongswan.d/charon/eap-radius.conf 
      ```
      
       eap-radius {
