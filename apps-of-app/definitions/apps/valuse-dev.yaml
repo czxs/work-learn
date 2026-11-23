@@ -1,0 +1,65 @@
+# -------------------------------Default Configs----------------------------------- #
+
+envName: sit
+default:
+  argocd:
+    namespace: argo
+  app:
+    enableAutoSync: true
+    autoSyncPrune: true
+    destination:
+      namespace: null
+      server: null
+    project: default
+    source:
+      path: null
+      repoURL: null
+      targetRevision: HEAD
+  
+  applicationsets:
+    preserveResourcesOnDeletion: false
+    generators: |
+      - clusters: {}
+    
+  
+# ----------------------------------ApplicationSets------------------------------- #
+  multi-source-apps:
+    enabled: true
+    generators:
+      - list:
+          elements:
+            - appName: frontend
+              chartPath: charts/web-app          # 公共仓库里的通用 Chart 路径
+              valuesRepoURL: https://github.com # 独立 values 仓库
+            - appName: backend
+              chartPath: charts/microservice
+              valuesRepoURL: https://github.com
+            - appName: odoo-crm
+              chartPath: charts/odoo
+              valuesRepoURL: https://github.com
+    destination:
+      namespace: '{{`{{appName}}`}}-{{ $.Values.envName }}'
+    # 注意：这里传入两个源所需的参数
+    chartRepoURL: https://github.com
+    chartPath: '{{`{{chartPath}}`}}'
+    valuesRepoURL: '{{`{{valuesRepoURL}}`}}'
+    valuesFilePath: 'values-{{ $.Values.envName }}.yaml'
+
+# -----------------------------------Applications----------------------------------- #
+
+applications:
+  coral:
+    enabled: true
+    destination:
+      namespace: coral-sit
+      server: shd-core
+    source:
+      path: app-server/src/main/helm/coral
+      repoURL: https://github.com/eradah-capital/coral.git
+      extraSourceFields: |
+        helm:
+          releaseName: coral
+          valueFiles:
+            - values-coral-{{ $.Values.envName }}.yaml
+
+ 
